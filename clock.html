@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title></title>
+
+  <style id="compiled-css" type="text/css">
+body {
+  background-color: black;
+}
+
+#date-time {
+  color: white;
+  font: 16px verdana, sans-serif;
+  text-align: center;
+}
+
+div {
+  border: 1px solid transparent;
+}
+
+#clock-rim {
+  display: block;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background: black;
+  border-radius: 150px;
+  margin: auto;
+}
+
+#clock-base {
+  display: block;
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: 19px auto;
+  border-radius: 150px;
+  background: black;
+}
+
+#second {
+  position: absolute;
+  top: 123px;
+  left: 128px;
+  width: 100px;
+  height: 2px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transform: unset;
+  background: grey;
+  transform-origin: 1px 1px;
+}
+
+#minute {
+  position: absolute;
+  top: 123px;
+  left: 128px;
+  width: 90px;
+  height: 4px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transform: unset;
+  background: white;
+  transform-origin: 2px 2px;
+}
+
+#hour {
+  position: absolute;
+  top: 123px;
+  left: 128px;
+  width: 50px;
+  height: 4px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transform: unset;
+  background: white;
+  transform-origin: 2px 2px;
+}
+
+#center {
+  position: absolute;
+  top: 118px;
+  left: 120px;
+  width: 16px;
+  height: 16px;
+  background: grey;
+  border: 1px solid gray;
+  border-radius: 16px;
+}
+
+#notch-container {
+  width: 260px;
+  height: 260px
+}
+
+.notch {
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background: white;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.thin {
+  position: absolute;
+  width: 10px;
+  height: 1px;
+  border-top: 1px solid gray;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+
+    window.onload=function(){
+      
+function deg2rad(d) {
+  return (2 * d / 360) * Math.PI;
+}
+
+var months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "august", "september", "oktober", "november", "december"]
+var days = ["Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag", "Maandag"]
+
+let H = 0;
+let M = 0;
+let S = 0;
+let wkd = 0;
+let Dts = 0;
+let Mon = 0;
+let Yrs = 0;
+
+setInterval(() => {
+  let minute = document.getElementById("minute");
+  let hour = document.getElementById("hour");
+  let second = document.getElementById("second");
+
+  mydate = new Date()
+
+  S = mydate.getSeconds();
+  M = mydate.getMinutes();
+  H = mydate.getHours();
+  Wkd = mydate.getDay();
+  Dts = mydate.getDate();
+  Mon = mydate.getMonth();
+  Yrs = mydate.getFullYear();
+
+  second.style.transform = 'rotate(' + (S * 6 - 90) + 'deg)';
+  minute.style.transform = 'rotate(' + (M * 6 - 90) + 'deg)';
+  hour.style.transform = 'rotate(' + (H * 30 + M * 0.5 - 90) + 'deg)';
+
+  let time_str = H + ':' + ('00' + M.toString()).substring(M.toString().length)
+  let date_time_text = days[wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
+
+  document.getElementById("date-time").innerHTML = date_time_text
+
+}, 10);
+
+function vec2ang(x, y) {
+  angleInRadians = Math.atan2(y, x);
+  angleInDegrees = (angleInRadians / Math.PI) * 180.0;
+  return angleInDegrees;
+}
+
+function ang2vec(angle) {
+  var radians = angle * (Math.PI / 180.0);
+  var x = Math.cos(radians);
+  var y = Math.sin(radians);
+  var a = new Segment(0, 0, x, y);
+  var u = a.normal().unit();
+  return [u.vecx, u.vecy];
+}
+
+let nc = document.getElementById("notch-container");
+let angle = 0;
+let rotate_x = 120;
+let rotate_y = 0;
+
+for (let i = 0; i < 60; i++) {
+  let thin = document.createElement("div");
+  let x = rotate_x * Math.cos(angle) - rotate_y * Math.cos(angle);
+  let y = rotate_y * Math.cos(angle) + rotate_x * Math.sin(angle);
+  let r = vec2ang(x, y);
+  thin.className = "thin";
+  thin.style.left = 122 + x + "px";
+  thin.style.top = 127 + y + "px";
+  thin.style.transform = "rotate(" + r + "deg)";
+  nc.appendChild(thin);
+  angle += (Math.PI / 300) * 10;
+}
+
+// reset
+angle = 0;
+rotate_x = 120;
+rotate_y = 0;
+
+for (let i = 0; i < 12; i++) {
+  let notch = document.createElement("div");
+  let x = rotate_x * Math.cos(angle) - rotate_y * Math.cos(angle);
+  let y = rotate_y * Math.cos(angle) + rotate_x * Math.sin(angle);
+  let r = vec2ang(x, y);
+  notch.className = "notch";
+  notch.style.left = 122 + x + "px";
+  notch.style.top = 127 + y + "px";
+  notch.style.transform = "rotate(" + r + "deg)";
+  nc.appendChild(notch);
+  angle += (Math.PI / 60) * 10;
+}
+
+
+    }
+
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="date-time"></div>
+  <div id="clock-rim">
+    <div id="clock-base">
+      <div id="notch-container"></div>
+      <div id="hour"></div>
+      <div id="minute"></div>
+      <div id="second"></div>
+      <div id="center"></div>
+    </div>
+  </div>
+</div>
+
+
+  
+ 
+</body>
+</html>

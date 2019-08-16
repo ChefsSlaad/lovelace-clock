@@ -2,7 +2,10 @@
 clock card for my lovelace dashboard
 
 
-place the card in the www folder.
+
+installing: 
+
+place the the file clock.html in the www folder.
 
 add the following in your ui-lovelace.yaml
 

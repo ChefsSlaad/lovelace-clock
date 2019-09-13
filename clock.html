@@ -151,7 +151,7 @@ setInterval(() => {
   hour.style.transform = 'rotate(' + (H * 30 + M * 0.5 - 90) + 'deg)';
 
   let time_str = H + ':' + ('00' + M.toString()).substring(M.toString().length)
-  let date_time_text = days[wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
+  let date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
 
   document.getElementById("date-time").innerHTML = date_time_text
 

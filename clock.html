@@ -126,7 +126,7 @@ var days = ["Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag",
 let H = 0;
 let M = 0;
 let S = 0;
-let wkd = 0;
+let Wkd = 0;
 let Dts = 0;
 let Mon = 0;
 let Yrs = 0;
@@ -146,11 +146,13 @@ setInterval(() => {
   Mon = mydate.getMonth();
   Yrs = mydate.getFullYear();
 
+// rotate clock hands to the correct position for this time 
   second.style.transform = 'rotate(' + (S * 6 - 90) + 'deg)';
   minute.style.transform = 'rotate(' + (M * 6 - 90) + 'deg)';
   hour.style.transform = 'rotate(' + (H * 30 + M * 0.5 - 90) + 'deg)';
 
-  let time_str = H + ':' + ('00' + M.toString()).substring(M.toString().length)
+// update the date and time field at the top of the clock
+  let time_str = H + ':' + ('00' + M.toString()).substring(M.toString().length);
   let date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
 
   document.getElementById("date-time").innerHTML = date_time_text
@@ -177,6 +179,7 @@ let angle = 0;
 let rotate_x = 120;
 let rotate_y = 0;
 
+// create the minute notches
 for (let i = 0; i < 60; i++) {
   let thin = document.createElement("div");
   let x = rotate_x * Math.cos(angle) - rotate_y * Math.cos(angle);
@@ -195,6 +198,7 @@ angle = 0;
 rotate_x = 120;
 rotate_y = 0;
 
+// create the hour notches
 for (let i = 0; i < 12; i++) {
   let notch = document.createElement("div");
   let x = rotate_x * Math.cos(angle) - rotate_y * Math.cos(angle);

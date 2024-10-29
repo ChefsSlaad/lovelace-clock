@@ -24,10 +24,9 @@
 
     #date-time {
       color: white;
-      font-size: 8vw; /* Adjust for larger text */
+      font-size: 6vw; /* Adjust for larger text */
       text-align: center;
       margin-bottom: 1vw;
-      max-height: 10vh; /* Limit vertical space for date/time */
       overflow: hidden;
     }
 
@@ -141,7 +140,179 @@
         document.getElementById("hour").style.transform = `translate(-50%, -100%) rotate(${H * 30 + M * 0.5}deg)`;
 
         const time_str = H + ':' + ('00' + M).slice(-2);
-        const date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
+        const date_time_text = <!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Responsive Clock</title>
+
+  <style type="text/css">
+    body {
+      background-color: black;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      max-width: 100vh; /* Ensures the clock stays circular */
+    }
+
+    #date-time {
+      color: white;
+      font-size: 4vw; /* Adjust for larger text */
+      text-align: center;
+      margin-bottom: 1vw;
+      overflow: hidden;
+    }
+
+    #clock-rim {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* Keeps the clock a square */
+      background: black;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    #clock-base {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      background: black;
+      border-radius: 50%;
+    }
+
+    /* Clock hands */
+    #second, #minute, #hour {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 50% 100%;
+    }
+
+    #second {
+      width: 1%;
+      height: 45%;
+      background: grey;
+      transform: translate(-50%, -100%);
+    }
+
+    #minute {
+      width: 1.5%;
+      height: 40%;
+      background: white;
+      transform: translate(-50%, -100%);
+    }
+
+    #hour {
+      width: 2%;
+      height: 30%;
+      background: white;
+      transform: translate(-50%, -100%);
+    }
+
+    #center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3%;
+      aspect-ratio: 1;
+      background: grey;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Notches */
+    .notch, .thin {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      transform-origin: 50% 50%;
+    }
+
+    .notch::before, .thin::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1%; /* Thinner notches */
+      border-radius: 2px;
+    }
+
+    .notch::before {
+      height: 4%;
+      background: white;
+    }
+
+    .thin::before {
+      height: 2%;
+      background: grey;
+    }
+  </style>
+
+  <script type="text/javascript">
+    window.onload = function () {
+      const months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+      const days = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
+
+      setInterval(() => {
+        const date = new Date();
+        const S = date.getSeconds();
+        const M = date.getMinutes();
+        const H = date.getHours();
+        const Wkd = date.getDay();
+        const Dts = date.getDate();
+        const Mon = date.getMonth();
+        const Yrs = date.getFullYear();
+
+        document.getElementById("second").style.transform = `translate(-50%, -100%) rotate(${S * 6}deg)`;
+        document.getElementById("minute").style.transform = `translate(-50%, -100%) rotate(${M * 6}deg)`;
+        document.getElementById("hour").style.transform = `translate(-50%, -100%) rotate(${H * 30 + M * 0.5}deg)`;
+
+        const time_str = H + ':' + ('00' + M).slice(-2);
+        const date_time_text = `${days[Wkd]} ${time_str}<br>${Dts} ${months[Mon]} ${Yrs}`;
+        document.getElementById("date-time").innerHTML = date_time_text;
+      }, 1000);
+
+      // Generate clock notches
+      const container = document.getElementById("clock-base");
+      for (let i = 0; i < 60; i++) {
+        let div = document.createElement("div");
+        div.className = i % 5 === 0 ? "notch" : "thin";
+        div.style.transform = `rotate(${i * 6}deg)`;
+        container.appendChild(div);
+      }
+    };
+  </script>
+
+</head>
+<body>
+  <div id="container">
+    <div id="date-time"></div>
+    <div id="clock-rim">
+      <div id="clock-base">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+        <div id="center"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
         document.getElementById("date-time").innerHTML = date_time_text;
       }, 1000);
 

@@ -5,12 +5,6 @@ clock card for my lovelace dashboard
 
 installing: 
 
-place the the file clock.html in the www folder.
-
+create a webpage lovelace card with the following: 
 add the following in your ui-lovelace.yaml
-
-
-    cards:
-     - type: iframe
-       url: /local/clock.html
-       aspect_ratio: 110% # tweak this to get it to fit right
+       url: https://chefsslaad.github.io/lovelace-clock/clock.html

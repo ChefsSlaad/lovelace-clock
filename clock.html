@@ -15,23 +15,26 @@
     }
 
     #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 90vw;
-      height: 90vw;
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 100vh; /* Ensures the clock stays circular */
     }
 
     #date-time {
       color: white;
-      font-size: 2vw;
+      font-size: 8vw; /* Adjust for larger text */
       text-align: center;
       margin-bottom: 1vw;
+      max-height: 10vh; /* Limit vertical space for date/time */
+      overflow: hidden;
     }
 
     #clock-rim {
       position: relative;
       width: 100%;
-      height: 100%;
+      padding-top: 100%; /* Keeps the clock a square */
       background: black;
       border-radius: 50%;
       overflow: hidden;
@@ -52,7 +55,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform-origin: 50% 100%; /* Rotate from the center */
+      transform-origin: 50% 100%;
     }
 
     #second {
@@ -81,7 +84,7 @@
       top: 50%;
       left: 50%;
       width: 3%;
-      aspect-ratio: 1;  
+      aspect-ratio: 1;
       background: grey;
       border-radius: 50%;
       transform: translate(-50%, -50%);
@@ -103,8 +106,8 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 1%;
-      background: white;
+      width: 1%; /* Thinner notches */
+      border-radius: 2px;
     }
 
     .notch::before {

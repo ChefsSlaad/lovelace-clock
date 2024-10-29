@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Responsive Clock</title>
+  <title>Clock</title>
 
   <style type="text/css">
     body {
@@ -16,13 +16,13 @@
 
     #container {
       width: 90%;
-      max-width: 300px;
-      max-height: 300px;
+      max-width: 400px;
+      max-height: 400px;
     }
 
     #date-time {
       color: white;
-      font-size: 1.5vw;
+      font-size: 1.2vw;
       text-align: center;
       margin-bottom: 1vw;
     }
@@ -30,7 +30,7 @@
     #clock-rim {
       position: relative;
       width: 100%;
-      padding-top: 100%; /* This maintains a square aspect ratio */
+      padding-top: 100%; /* Maintains a square aspect ratio */
       background: black;
       border-radius: 50%;
       overflow: hidden;
@@ -44,86 +44,90 @@
       height: 80%;
       background: black;
       border-radius: 50%;
-      transform-origin: center;
     }
 
-    #second, #minute, #hour, #center {
+    /* Clock hands */
+    #second, #minute, #hour {
       position: absolute;
-      transform-origin: 50% 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%; /* Rotate from the base of each hand */
     }
 
     #second {
-      top: 48%;
-      left: 50%;
       width: 45%;
       height: 0.5%;
       background: grey;
+      transform: translate(-50%, -100%);
     }
 
     #minute {
-      top: 49%;
-      left: 50%;
       width: 40%;
       height: 1%;
       background: white;
+      transform: translate(-50%, -100%);
     }
 
     #hour {
-      top: 49%;
-      left: 50%;
       width: 25%;
-      height: 1%;
+      height: 1.5%;
       background: white;
+      transform: translate(-50%, -100%);
     }
 
     #center {
-      top: 49%;
+      position: absolute;
+      top: 50%;
       left: 50%;
       width: 3%;
       height: 3%;
       background: grey;
       border-radius: 50%;
+      transform: translate(-50%, -50%);
     }
 
+    /* Notches */
     .notch, .thin {
       position: absolute;
-      background: white;
-      transform-origin: 50% 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% -120%;
     }
 
     .notch {
       width: 3%;
-      height: 0.5%;
+      height: 1%;
+      background: white;
     }
 
     .thin {
-      width: 2%;
-      height: 0.2%;
+      width: 1.5%;
+      height: 0.5%;
       background: grey;
     }
   </style>
 
   <script type="text/javascript">
     window.onload = function () {
-      let months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "august", "september", "oktober", "november", "december"];
-      let days = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
+      const months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+      const days = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
 
       setInterval(() => {
-        let date = new Date();
-        let S = date.getSeconds();
-        let M = date.getMinutes();
-        let H = date.getHours();
-        let Wkd = date.getDay();
-        let Dts = date.getDate();
-        let Mon = date.getMonth();
-        let Yrs = date.getFullYear();
+        const date = new Date();
+        const S = date.getSeconds();
+        const M = date.getMinutes();
+        const H = date.getHours();
+        const Wkd = date.getDay();
+        const Dts = date.getDate();
+        const Mon = date.getMonth();
+        const Yrs = date.getFullYear();
 
-        document.getElementById("second").style.transform = 'rotate(' + (S * 6) + 'deg)';
-        document.getElementById("minute").style.transform = 'rotate(' + (M * 6) + 'deg)';
-        document.getElementById("hour").style.transform = 'rotate(' + (H * 30 + M * 0.5) + 'deg)';
+        document.getElementById("second").style.transform = 'translate(-50%, -100%) rotate(' + (S * 6) + 'deg)';
+        document.getElementById("minute").style.transform = 'translate(-50%, -100%) rotate(' + (M * 6) + 'deg)';
+        document.getElementById("hour").style.transform = 'translate(-50%, -100%) rotate(' + (H * 30 + M * 0.5) + 'deg)';
 
-        let time_str = H + ':' + ('00' + M).slice(-2);
-        let date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
+        const time_str = H + ':' + ('00' + M).slice(-2);
+        const date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
         document.getElementById("date-time").innerHTML = date_time_text;
       }, 1000);
 
@@ -133,7 +137,7 @@
       for (let i = 0; i < 60; i++) {
         let div = document.createElement("div");
         div.className = i % 5 === 0 ? "notch" : "thin";
-        div.style.transform = `rotate(${i * 6}deg) translate(0, -50%)`;
+        div.style.transform = `rotate(${i * 6}deg)`;
         container.appendChild(div);
       }
     };

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Responsive Clock</title>
+
+  <style type="text/css">
+    body {
+      background-color: black;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #container {
+      width: 90%;
+      max-width: 300px;
+      max-height: 300px;
+    }
+
+    #date-time {
+      color: white;
+      font-size: 1.5vw;
+      text-align: center;
+      margin-bottom: 1vw;
+    }
+
+    #clock-rim {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* This maintains a square aspect ratio */
+      background: black;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    #clock-base {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      background: black;
+      border-radius: 50%;
+      transform-origin: center;
+    }
+
+    #second, #minute, #hour, #center {
+      position: absolute;
+      transform-origin: 50% 50%;
+    }
+
+    #second {
+      top: 48%;
+      left: 50%;
+      width: 45%;
+      height: 0.5%;
+      background: grey;
+    }
+
+    #minute {
+      top: 49%;
+      left: 50%;
+      width: 40%;
+      height: 1%;
+      background: white;
+    }
+
+    #hour {
+      top: 49%;
+      left: 50%;
+      width: 25%;
+      height: 1%;
+      background: white;
+    }
+
+    #center {
+      top: 49%;
+      left: 50%;
+      width: 3%;
+      height: 3%;
+      background: grey;
+      border-radius: 50%;
+    }
+
+    .notch, .thin {
+      position: absolute;
+      background: white;
+      transform-origin: 50% 50%;
+    }
+
+    .notch {
+      width: 3%;
+      height: 0.5%;
+    }
+
+    .thin {
+      width: 2%;
+      height: 0.2%;
+      background: grey;
+    }
+  </style>
+
+  <script type="text/javascript">
+    window.onload = function () {
+      let months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "august", "september", "oktober", "november", "december"];
+      let days = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
+
+      setInterval(() => {
+        let date = new Date();
+        let S = date.getSeconds();
+        let M = date.getMinutes();
+        let H = date.getHours();
+        let Wkd = date.getDay();
+        let Dts = date.getDate();
+        let Mon = date.getMonth();
+        let Yrs = date.getFullYear();
+
+        document.getElementById("second").style.transform = 'rotate(' + (S * 6) + 'deg)';
+        document.getElementById("minute").style.transform = 'rotate(' + (M * 6) + 'deg)';
+        document.getElementById("hour").style.transform = 'rotate(' + (H * 30 + M * 0.5) + 'deg)';
+
+        let time_str = H + ':' + ('00' + M).slice(-2);
+        let date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
+        document.getElementById("date-time").innerHTML = date_time_text;
+      }, 1000);
+
+      // Generate clock notches
+      const container = document.getElementById("clock-base");
+
+      for (let i = 0; i < 60; i++) {
+        let div = document.createElement("div");
+        div.className = i % 5 === 0 ? "notch" : "thin";
+        div.style.transform = `rotate(${i * 6}deg) translate(0, -50%)`;
+        container.appendChild(div);
+      }
+    };
+  </script>
+
+</head>
+<body>
+  <div id="container">
+    <div id="date-time"></div>
+    <div id="clock-rim">
+      <div id="clock-base">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+        <div id="center"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

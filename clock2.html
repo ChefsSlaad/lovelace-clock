@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Clock</title>
+  <title>Responsive Clock</title>
 
   <style type="text/css">
     body {
@@ -15,14 +15,15 @@
     }
 
     #container {
-      width: 90%;
-      max-width: 400px;
-      max-height: 400px;
+      width: 90vw;
+      height: 90vw;
+      max-width: 100%;
+      max-height: 100%;
     }
 
     #date-time {
       color: white;
-      font-size: 1.2vw;
+      font-size: 2vw;
       text-align: center;
       margin-bottom: 1vw;
     }
@@ -30,7 +31,7 @@
     #clock-rim {
       position: relative;
       width: 100%;
-      padding-top: 100%; /* Maintains a square aspect ratio */
+      height: 100%;
       background: black;
       border-radius: 50%;
       overflow: hidden;
@@ -38,10 +39,10 @@
 
     #clock-base {
       position: absolute;
-      top: 10%;
-      left: 10%;
-      width: 80%;
-      height: 80%;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
       background: black;
       border-radius: 50%;
     }
@@ -51,26 +52,26 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform-origin: 0% 0%; /* Rotate from the base of each hand */
+      transform-origin: 50% 100%; /* Rotate from the center */
     }
 
     #second {
-      width: 45%;
-      height: 0.5%;
+      width: 1%;
+      height: 45%;
       background: grey;
       transform: translate(-50%, -100%);
     }
 
     #minute {
-      width: 40%;
-      height: 1%;
+      width: 1.5%;
+      height: 40%;
       background: white;
       transform: translate(-50%, -100%);
     }
 
     #hour {
-      width: 25%;
-      height: 1.5%;
+      width: 2%;
+      height: 30%;
       background: white;
       transform: translate(-50%, -100%);
     }
@@ -89,20 +90,31 @@
     /* Notches */
     .notch, .thin {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0% -120%;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      transform-origin: 50% 50%;
     }
 
-    .notch {
-      width: 3%;
-      height: 1%;
+    .notch::before, .thin::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2%;
+      background: white;
+      border-radius: 2px;
+    }
+
+    .notch::before {
+      height: 4%;
       background: white;
     }
 
-    .thin {
-      width: 1.5%;
-      height: 0.5%;
+    .thin::before {
+      height: 2%;
       background: grey;
     }
   </style>
@@ -122,9 +134,9 @@
         const Mon = date.getMonth();
         const Yrs = date.getFullYear();
 
-        document.getElementById("second").style.transform = 'translate(-50%, -100%) rotate(' + (S * 6) + 'deg)';
-        document.getElementById("minute").style.transform = 'translate(-50%, -100%) rotate(' + (M * 6) + 'deg)';
-        document.getElementById("hour").style.transform = 'translate(-50%, -100%) rotate(' + (H * 30 + M * 0.5) + 'deg)';
+        document.getElementById("second").style.transform = `translate(-50%, -100%) rotate(${S * 6}deg)`;
+        document.getElementById("minute").style.transform = `translate(-50%, -100%) rotate(${M * 6}deg)`;
+        document.getElementById("hour").style.transform = `translate(-50%, -100%) rotate(${H * 30 + M * 0.5}deg)`;
 
         const time_str = H + ':' + ('00' + M).slice(-2);
         const date_time_text = days[Wkd] + " " + time_str + "<br>" + Dts + " " + months[Mon] + " " + Yrs;
@@ -133,7 +145,6 @@
 
       // Generate clock notches
       const container = document.getElementById("clock-base");
-
       for (let i = 0; i < 60; i++) {
         let div = document.createElement("div");
         div.className = i % 5 === 0 ? "notch" : "thin";

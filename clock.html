@@ -22,16 +22,6 @@
       max-width: 90vh; /* Ensures the clock stays circular */
     }
 
-    #date-time {
-      color: white;
-      font-size: 6vw; /* Adjust for larger text */
-      text-align: center;
-      vertical-align: bottom;
-      min-width: 7vw;
-      margin-bottom: 1vw;
-      padding: 5px; /* Add padding for spacing */
-    }
-
     #clock-rim {
       position: relative;
       width: 100%;
@@ -125,7 +115,7 @@
   <script type="text/javascript">
     window.onload = function () {
 
-      setInterval(() => {
+      setInterval () => {
         const date = new Date();
         const S = date.getSeconds();
         const M = date.getMinutes();
@@ -151,7 +141,6 @@
 </head>
 <body>
   <div id="container">
-//    <div id="date-time"></div>
     <div id="clock-rim">
       <div id="clock-base">
         <div id="hour"></div>

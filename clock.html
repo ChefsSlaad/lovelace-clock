@@ -124,29 +124,18 @@
 
   <script type="text/javascript">
     window.onload = function () {
-      const months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
-      const days = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
 
       setInterval(() => {
         const date = new Date();
         const S = date.getSeconds();
         const M = date.getMinutes();
         const H = date.getHours();
-        const Wkd = date.getDay();
-        const Dts = date.getDate();
-        const Mon = date.getMonth();
-        const Yrs = date.getFullYear();
 
         // Update the clock hands
         document.getElementById("second").style.transform = `translate(-50%, -100%) rotate(${S * 6}deg)`;
         document.getElementById("minute").style.transform = `translate(-50%, -100%) rotate(${M * 6}deg)`;
         document.getElementById("hour").style.transform = `translate(-50%, -100%) rotate(${H * 30 + M * 0.5}deg)`;
 
-        // Update date and time text in Dutch format
-        const time_str = H + ':' + ('00' + M).slice(-2);
-        const date_time_text = `${days[Wkd]} ${time_str}<br>${Dts} ${months[Mon]} ${Yrs}`;
-        document.getElementById("date-time").innerHTML = date_time_text;
-      }, 1000);
 
       // Generate clock notches
       const container = document.getElementById("clock-base");
@@ -162,7 +151,7 @@
 </head>
 <body>
   <div id="container">
-    <div id="date-time"></div>
+//    <div id="date-time"></div>
     <div id="clock-rim">
       <div id="clock-base">
         <div id="hour"></div>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datum en Tijd</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #datetime-container {
+      text-align: center;
+    }
+
+    #date, #time {
+      font-size: 2rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="datetime-container">
+    <div id="time"></div>
+    <div id="date"></div>
+  </div>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+
+      // Format the day and time in Dutch
+      const timeFormatter = new Intl.DateTimeFormat('nl-NL', {
+        weekday: 'long',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      // Format the date in Dutch
+      const dateFormatter = new Intl.DateTimeFormat('nl-NL', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+
+      document.getElementById('time').textContent = timeFormatter.format(now);
+      document.getElementById('date').textContent = dateFormatter.format(now);
+    }
+
+    // Update the time every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call to display the time immediately
+  </script>
+</body>
+</html>
